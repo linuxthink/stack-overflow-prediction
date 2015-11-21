@@ -13,3 +13,4 @@ gen/*
 *.dat
 report/*
 models*
+.DS_Store
