@@ -1,5 +1,11 @@
 Predict Closed Questions on Stack Overflow
 
+# Data path (important)
+
+    # data path is ~/data/stack_overflow
+    import os
+    data_path = os.path.join(os.path.expanduser("~"), 'data/stack_overflow')
+
 # Time-line (Due: Dec 01)
   -  Framework (Nov 21 Sat)
   -  Gen feature (Nov 21 Sat)
