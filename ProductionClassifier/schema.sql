@@ -1,0 +1,16 @@
+CREATE TABLE questions (
+    id BIGSERIAL,
+    post_id BIGINT,
+    post_creation_date TIMESTAMP WITH TIME ZONE,
+    owner_user_id BIGINT,
+    owner_creation_date TIMESTAMP WITH TIME ZONE,
+    reputation_at_post_creation BIGINT,
+    owner_undeleted_answer_count_at_post_time BIGINT,
+    title CHARACTER VARYING,
+    body_html CHARACTER VARYING,
+    tag1 CHARACTER VARYING,
+    tag2 CHARACTER VARYING,
+    tag3 CHARACTER VARYING,
+    tag4 CHARACTER VARYING,
+    tag5 CHARACTER VARYING,
+    close_likelihood DOUBLE PRECISION);
