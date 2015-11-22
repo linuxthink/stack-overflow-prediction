@@ -28,6 +28,10 @@ status_map_label = dict((k, int(i + 1)) for i, k in enumerate(all_status))
 
 
 def gen_datum_feature_dict(datum):
+    """
+    return feature in a dict format
+    """
+    
     def norm(string):
         return RE_NONANS.sub('', string).lower()
 
@@ -138,8 +142,12 @@ def gen_datum_feature_dict(datum):
     return dict(f_dict)
 
 def gen_datum_label(datum):
+    """
+    return label as int 0,1,2,3,4,5; 0 if test set
+    """
+    
     try:
         post_status_id = status_map_label[datum['OpenStatus']]
     except KeyError:
-        post_status_id = '0' # test set
+        post_status_id = 0 # test set
     return post_status_id
