@@ -8,7 +8,7 @@ Predict Closed Questions on Stack Overflow
 
 # Time-line (Due: Dec 01)
   -  Framework (Nov 21 Sat)
-  -  Gen feature (Nov 21 Sat)
+  -  Gen feature -> see `gen_feature_demo.ipynb`, more features will be added
   -  Visualize framework time vs. averge close rate (Nov 22 Sun)
   -  Visualize most of the tasks (Nov 25 Wed)
   -  Classification on Kaggle (first submission Nov 23 Mon)
