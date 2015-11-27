@@ -9,6 +9,7 @@ import re
 from itertools import groupby
 import nltk
 from dateutil import parser as dateparser
+import string
 
 
 def norm(string):
@@ -22,7 +23,7 @@ def ratio(x, y):
         return x / float(y)
     else:
         return 0
-    
+
 def dict_to_list(d):
     stack = []
     keys = sorted(d.keys())
@@ -43,7 +44,7 @@ def dict_to_keys(d, prefix=''):
         else:
             stack.append(prefix_k)
     return stack
-    
+
 # regexs
 RE_NONALNUM = re.compile(r'\W+')
 RE_NONANS = re.compile(r'[^\w\s]+')
@@ -70,7 +71,7 @@ class FeatureLabelBuilder(object):
         # can return feature as dict
         flb.feature_dict
     """
-    
+
     def __init__(self, datum):
         self.datum = datum
         self.feature_nested_dict = FeatureLabelBuilder.__get_feature_nested_dict(self.datum)
@@ -78,7 +79,7 @@ class FeatureLabelBuilder(object):
         self.feature = dict_to_list(self.feature_nested_dict)
         self.feature_keys_cache = None # to be computed on demand
         self.feature_dict_cache = None # to be computed on demand
-        
+
     @property
     def feature_keys(self):
         if not self.feature_keys_cache:
@@ -95,7 +96,7 @@ class FeatureLabelBuilder(object):
                 d[k] = v
             self.feature_dict_cache = d
         return self.feature_dict_cache
-    
+
     @staticmethod
     def __get_feature_nested_dict(datum):
         """
@@ -131,7 +132,14 @@ class FeatureLabelBuilder(object):
         f_dict['num']['non_word'] = 0
 
         for t in text:
-            for sent in nltk.sent_tokenize(t):
+            # try:
+            #     nltk.sent_tokenize(t)
+            # except:
+            #     import ipdb; ipdb.set_trace()
+            #     print(text)
+            #     raise
+
+            for sent in nltk.sent_tokenize(filter(lambda x: x in string.printable, t)):
                 f_dict['num']['sentence'] += 1
                 ss = sent.strip()
                 if ss:
@@ -206,7 +214,7 @@ class FeatureLabelBuilder(object):
         f_dict['time']['weekday'] = post_time.weekday()
 
         return dict(f_dict)
-    
+
     @staticmethod
     def __get_label(datum):
         """
