@@ -28,17 +28,16 @@
 
     var data;
 
-    d3.json("../data/timeratio.json",function(json){
+    d3.json("../data/dayvsratio.json",function(json){
                 data = json;
 
-    var format = d3.time.format("%a %b %d %H:%M:%S IST %Y");
+    var format = d3.time.format("%d");
 
-    var parseDate = d3.time.format("%b %Y").parse;
 
-    var x = d3.time.scale().range([0, width]),
-        y = d3.scale.linear().domain([0, 1]).range([height, 0]);
+    var x = d3.time.scale().domain([format.parse("01"), format.parse("31")]).range([0, width]),
+        y = d3.scale.linear().domain([0, 0.045]).range([height, 0]);
 
-    var xAxis = d3.svg.axis().scale(x).orient("bottom"),
+    var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.days,1).tickFormat(format),
         yAxis = d3.svg.axis().scale(y).orient("left");
 
 
@@ -47,12 +46,6 @@
         .x(function(d) { return x(format.parse(d3.keys(d)[0])); })
         .y0(height)
         .y1(function(d) { return y(d3.values(d)[0]); });
-
-    var area2 = d3.svg.area()
-        .interpolate("monotone")
-        .x(function(d) { return x(format.parse(d3.keys(d)[0])); })
-        .y0(function(d) {return y(d3.values(d)[0]);})
-        .y1(0);
 
 
     var svg = d3.select("body").append("svg")
@@ -71,13 +64,6 @@
     var context = svg.append("g")
         .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-      x.domain(d3.extent(data.map(function(d) { return format.parse(d3.keys(d)[0]); })));
-
-    focus.append("path")
-          .datum(data)
-          .attr("clip-path", "url(#clip)")
-          .attr("fill", "#ff7f0e")
-          .attr("d", area2);
 
     focus.append("path")
           .datum(data)
@@ -88,6 +74,7 @@
     focus.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
+          .attr("font-size", "12pt")
           .call(xAxis);
 
     focus.append("g")

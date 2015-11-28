@@ -1,6 +1,6 @@
 *.p
 *.pickle
-*.data
+*data*
 *.pyc
 *.json
 *.txt
