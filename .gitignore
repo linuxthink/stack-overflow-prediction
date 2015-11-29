@@ -1,3 +1,4 @@
+*.lyx
 *.p
 *.pickle
 *data*
