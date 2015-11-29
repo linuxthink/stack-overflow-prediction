@@ -11,6 +11,22 @@ import nltk
 from dateutil import parser as dateparser
 import string
 
+data_path = os.path.join(os.path.expanduser("~"), 'data/stack_overflow')
+
+def full_path(path):
+    return os.path.join(data_path, path)
+
+def get_feature_keys():
+    reader = csv.DictReader(open(os.path.join(data_path, 'train-sample.csv')))
+
+    count = 0
+    for datum in reader:
+        count += 1
+        if count == 2:
+            break
+
+    flb = FeatureLabelBuilder(datum)
+    return flb.feature_keys
 
 def norm(string):
     return RE_NONANS.sub('', string).lower()
