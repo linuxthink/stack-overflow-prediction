@@ -44,11 +44,11 @@ params = {'bst:max_depth': 5,
           'silent': 0,
           'objective': 'multi:softprob',
           'num_class': 5,
-          'nthread': 4, # change this!
+          'nthread': 16, # change this!
           'eval_metric': 'mlogloss',
           'subsample': 0.01}
 
-ops = {'num_boost_round': 2,
+ops = {'num_boost_round': 2000,
        'early_stopping_rounds': 10}
 
 print("start training")
