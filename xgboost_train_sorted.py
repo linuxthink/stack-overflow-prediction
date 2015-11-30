@@ -58,6 +58,8 @@ for d, e, s in itertools.product(params_grid['bst:max_depth'],
     params['bst:eta'] = e
     params['subsample'] = s
 
+    print(params)
+
     # convert to xgb matrix, reload each time
     dtrain = xgb.DMatrix(train_xs, label=train_ys)
     dtest = xgb.DMatrix(test_xs, label=test_ys)
