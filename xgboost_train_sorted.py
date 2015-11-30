@@ -14,7 +14,7 @@ from util_eval import multiclass_log_loss, multiclass_accuracy
 import xgboost as xgb
 
 # load data
-(all_xs, all_ys) = pickle.load(open(full_path("train_xs_ys_np_sorted.p"), "rb"))
+(all_xs, all_ys) = pickle.load(open(full_path("train_37_xs_ys_np_sorted.p"), "rb"))
 all_ys = all_ys - 1.0
 
 # set up split portion of train and test data
@@ -34,14 +34,14 @@ dtrain = xgb.DMatrix(train_xs, label=train_ys)
 dtest = xgb.DMatrix(test_xs, label=test_ys)
 
 # set up boosting params
-params = {'bst:max_depth': 5,
+params = {'bst:max_depth': 4,
           'bst:eta': 0.1,
           'silent': 0,
           'objective': 'multi:softprob',
           'num_class': 5,
           'nthread': 16, # change this!
           'eval_metric': 'mlogloss',
-          'subsample': 0.01}
+          'subsample': 0.005}
 
 ops = {'num_boost_round': 2000,
        'early_stopping_rounds': 10}
