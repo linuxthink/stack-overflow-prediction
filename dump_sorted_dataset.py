@@ -12,12 +12,12 @@ import scipy as sp
 from feature_label_builder import FeatureLabelBuilder, get_feature_keys
 from feature_label_builder import data_path, full_path
 
-reader = csv.DictReader(open(os.path.join(data_path, 'train.csv')))
-post_times = [int(time.mktime(dateparser.parse(datum['PostCreationDate']).timetuple()))
-              for datum in reader]
-post_times = np.array(post_times)
-pickle.dump(post_times, open(full_path("post_times_37.p"), "wb"),
-            protocol=pickle.HIGHEST_PROTOCOL)
+# reader = csv.DictReader(open(os.path.join(data_path, 'train.csv')))
+# post_times = [int(time.mktime(dateparser.parse(datum['PostCreationDate']).timetuple()))
+#               for datum in reader]
+# post_times = np.array(post_times)
+# pickle.dump(post_times, open(full_path("post_times_37.p"), "wb"),
+#             protocol=pickle.HIGHEST_PROTOCOL)
 post_times = np.array(pickle.load(open(full_path("post_times_37.p"), "rb")))
 
 sort_arg = np.argsort(post_times)
