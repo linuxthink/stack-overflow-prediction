@@ -1,9 +1,8 @@
-\#*
 *~
 *.lyx
 *.p
 *.pickle
-*data*
+*data
 *.pyc
 *.json
 *.txt
