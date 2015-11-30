@@ -66,9 +66,9 @@ bst.save_model('xgboost_round_%s_%s.model' % (ops['num_boost_round'],
 
 # load test (valid) set
 dtest = xgb.DMatrix(test_xs)
-ypred = bst.predict(dtest)
 
 # predict
+ypred = bst.predict(dtest, ntree_limit=bst.best_ntree_limit)
 test_ys_preds = np.array(ypred)
 
 # metrics
