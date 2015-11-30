@@ -14,25 +14,20 @@ from util_eval import multiclass_log_loss, multiclass_accuracy
 import xgboost as xgb
 
 # load data
-(all_xs, all_ys) = pickle.load(open(full_path("train_xs_ys_np.p"), "rb"))
+(all_xs, all_ys) = pickle.load(open(full_path("train_xs_ys_np_sorted.p"), "rb"))
 all_ys = all_ys - 1.0
 
 # set up split portion of train and test data
-test_percentage = 0.1
+test_percentage = 0.01
 all_num = len(all_ys)
 train_num = int(round((1. - test_percentage) * all_num))
 test_num = all_num - train_num
 
-# prepare random shuffle index
-random_idx = np.array(range(all_num))
-np.random.seed(0)
-np.random.shuffle(random_idx)
-
 # prepare train and test dataset
-train_xs = all_xs[random_idx][:train_num]
-train_ys = all_ys[random_idx][:train_num]
-test_xs = all_xs[random_idx][train_num:]
-test_ys = all_ys[random_idx][train_num:]
+train_xs = all_xs[:train_num]
+train_ys = all_ys[:train_num]
+test_xs = all_xs[train_num:]
+test_ys = all_ys[train_num:]
 
 # convert to xgb matrix
 dtrain = xgb.DMatrix(train_xs, label=train_ys)
@@ -59,10 +54,10 @@ bst = xgb.train(params.items(),
                 early_stopping_rounds=ops['early_stopping_rounds'])
 
 # dump model
-bst.dump_model('xgboost_round_%s_%s.txt' % (ops['num_boost_round'],
-                                            ops['early_stopping_rounds']))
-bst.save_model('xgboost_round_%s_%s.model' % (ops['num_boost_round'],
-                                              ops['early_stopping_rounds']))
+bst.dump_model('xgboost_sorted_round_%s_%s.txt' % (ops['num_boost_round'],
+                                                   ops['early_stopping_rounds']))
+bst.save_model('xgboost_sorted_round_%s_%s.model' % (ops['num_boost_round'],
+                                                     ops['early_stopping_rounds']))
 
 # load test (valid) set
 dtest = xgb.DMatrix(test_xs)
