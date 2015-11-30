@@ -18,7 +18,7 @@ import xgboost as xgb
 all_ys = all_ys - 1.0
 
 # set up split portion of train and test data
-test_percentage = 0.1
+test_percentage = 0.01
 all_num = len(all_ys)
 train_num = int(round((1. - test_percentage) * all_num))
 test_num = all_num - train_num
