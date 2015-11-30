@@ -18,7 +18,7 @@ import xgboost as xgb
 all_ys = all_ys - 1.0
 
 # set up split portion of train and test data
-test_percentage = 0.01
+test_percentage = 0.1
 all_num = len(all_ys)
 train_num = int(round((1. - test_percentage) * all_num))
 test_num = all_num - train_num
@@ -66,9 +66,9 @@ bst.save_model('xgboost_round_%s_%s.model' % (ops['num_boost_round'],
 
 # load test (valid) set
 dtest = xgb.DMatrix(test_xs)
-ypred = bst.predict(dtest)
 
 # predict
+ypred = bst.predict(dtest, ntree_limit=bst.best_ntree_limit)
 test_ys_preds = np.array(ypred)
 
 # metrics
