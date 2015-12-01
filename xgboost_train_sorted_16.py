@@ -34,7 +34,7 @@ test_ys = all_ys[train_num:]
 params_grid = dict()
 params_grid['bst:max_depth'] = [3, 4]
 params_grid['bst:eta'] = [0.02, 0.05, 0.1]
-params_grid['subsample'] = [0.002, 0.005]
+params_grid['subsample'] = [0.01]
 
 # set up boosting params
 params = {'bst:max_depth': None,
@@ -42,7 +42,7 @@ params = {'bst:max_depth': None,
           'silent': 0,
           'objective': 'multi:softprob',
           'num_class': 5,
-          'nthread': 36, # change this!
+          'nthread': 16, # change this!
           'eval_metric': 'mlogloss',
           'subsample': None}
 
