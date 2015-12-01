@@ -34,7 +34,7 @@ test_ys = all_ys[train_num:]
 params_grid = dict()
 params_grid['bst:max_depth'] = [3, 4]
 params_grid['bst:eta'] = [0.02, 0.05, 0.1]
-params_grid['subsample'] = [0.002, 0.005, 0.01]
+params_grid['subsample'] = [0.002, 0.005]
 
 # set up boosting params
 params = {'bst:max_depth': None,
