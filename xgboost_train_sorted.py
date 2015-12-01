@@ -32,9 +32,10 @@ test_ys = all_ys[train_num:]
 
 # setup param grid
 params_grid = dict()
-params_grid['bst:max_depth'] = [3, 4]
-params_grid['bst:eta'] = [0.02, 0.05, 0.1]
-params_grid['subsample'] = [0.002, 0.005]
+params_grid['bst:max_depth'] = [3]
+params_grid['bst:eta'] = [0.005, 0.1, 0.02, 0.05, 0.1]
+params_grid['subsample'] = [0.01]
+params_grid['bst:colsample_bytree'] = [0.1, 0.3, 0.7, 0.9]
 
 # set up boosting params
 params = {'bst:max_depth': None,
@@ -44,19 +45,22 @@ params = {'bst:max_depth': None,
           'num_class': 5,
           'nthread': 36, # change this!
           'eval_metric': 'mlogloss',
-          'subsample': None}
+          'subsample': None,
+          'bst:colsample_bytree': None}
 
 ops = {'num_boost_round': 2000,
        'early_stopping_rounds': 10}
 
 print("start training")
 
-for d, e, s in itertools.product(params_grid['bst:max_depth'],
-                                 params_grid['bst:eta'],
-                                 params_grid['subsample']):
+for d, e, s, c in itertools.product(params_grid['bst:max_depth'],
+                                    params_grid['bst:eta'],
+                                    params_grid['subsample'],
+                                    params_grid['bst:colsample_bytree']):
     params['bst:max_depth'] = d
     params['bst:eta'] = e
     params['subsample'] = s
+    params['bst:colsample_bytree'] = c
 
     print(params)
 
@@ -83,19 +87,21 @@ for d, e, s in itertools.product(params_grid['bst:max_depth'],
     print(multiclass_accuracy(test_ys, test_ys_preds))
 
     # dump model
-    bst.dump_model('xgboost_sorted_round_%s_%s_%s_%s_%s_%s.txt'
+    bst.dump_model('xgboost_sorted_round_%s_%s_%s_%s_%s_%s_%s.txt'
                    % (ops['num_boost_round'],
                       ops['early_stopping_rounds'],
                       params['bst:max_depth'],
                       params['bst:eta'],
                       params['subsample'],
+                      params['bst:colsample_bytree'],
                       log_loss))
-    bst.save_model('xgboost_sorted_round_%s_%s_%s_%s_%s_%s.model'
+    bst.save_model('xgboost_sorted_round_%s_%s_%s_%s_%s_%s_%s.model'
                    % (ops['num_boost_round'],
                       ops['early_stopping_rounds'],
                       params['bst:max_depth'],
                       params['bst:eta'],
                       params['subsample'],
+                      params['bst:colsample_bytree'],
                       log_loss))
 # import ipdb; ipdb.set_trace()
 
