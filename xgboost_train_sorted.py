@@ -19,7 +19,7 @@ import itertools
 all_ys = all_ys - 1.0
 
 # set up split portion of train and test data
-test_percentage = 0.01
+test_percentage = 0.1
 all_num = len(all_ys)
 train_num = int(round((1. - test_percentage) * all_num))
 test_num = all_num - train_num
@@ -32,9 +32,9 @@ test_ys = all_ys[train_num:]
 
 # setup param grid
 params_grid = dict()
-params_grid['bst:max_depth'] = [3, 4, 5]
-params_grid['bst:eta'] = [0.01, 0.02, 0.05, 0.1, 0.2]
-params_grid['subsample'] = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
+params_grid['bst:max_depth'] = [3, 4]
+params_grid['bst:eta'] = [0.02, 0.05, 0.1]
+params_grid['subsample'] = [0.002, 0.005, 0.01]
 
 # set up boosting params
 params = {'bst:max_depth': None,
