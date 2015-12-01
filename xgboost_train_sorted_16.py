@@ -46,7 +46,7 @@ params = {'bst:max_depth': None,
           'nthread': 16, # change this!
           'eval_metric': 'mlogloss',
           'subsample': None,
-          'colsample_bytree': None}
+          'bst:colsample_bytree': None}
 
 ops = {'num_boost_round': 2000,
        'early_stopping_rounds': 10}
