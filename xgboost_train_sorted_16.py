@@ -42,7 +42,7 @@ params = {'bst:max_depth': None,
           'silent': 0,
           'objective': 'multi:softprob',
           'num_class': 5,
-          'nthread': 32, # change this!
+          'nthread': 16, # change this!
           'eval_metric': 'mlogloss',
           'subsample': None}
 
