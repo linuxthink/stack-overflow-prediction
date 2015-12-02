@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+
+svg {
+  font: 32px sans-serif;
+}
+
+path { 
+    fill: none;
+}
+
+
+.axis {
+  font: 16px sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.legend {
+    font-size: 12px;
+  }
+  rect {
+    stroke-width: 2;
+  }
+
+</style>
+<body align="center">
+
+<!-- load the d3.js library -->    
+<script src="./d3/d3.min.js"></script>
+
+<script>
+
+// Set the dimensions of the canvas / graph
+var margin = {top: 60, right: 70, bottom: 60, left: 70},
+    width = 650 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+
+// Set the ranges
+var x = d3.scale.linear().range([0, width + 10]);
+var y = d3.scale.linear().range([height, 0]);
+
+// Define the axes
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(10);
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(10);
+
+// Define the line
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.close); });
+
+var valueline1 = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.close1); });
+    
+// Adds the svg canvas
+var svg = d3.select("body")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+
+// Get the data
+d3.csv("../data/converge.csv", function(error, data) {
+    data.forEach(function(d) {
+        d.date = d.date;
+        d.close = +d.close;
+    });
+
+    // Scale the range of the data
+    x.domain([0, d3.max(data,function(d) { return Math.max(d.date); })]);
+    y.domain([0, d3.max(data, function(d) { return Math.max(d.close, d.close1); })]);
+
+    // Add the valueline path.
+    svg.append("path")
+        .attr("class", "line")
+        .attr("stroke", "red")
+        .attr("d", valueline(data));
+
+    svg.append("path")
+        .attr("stroke", "steelblue")
+        .attr("d", valueline1(data));
+
+    // Add the X Axis
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    // Add the Y Axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+
+    svg.append("text")
+                .attr("transform","rotate(-90)")
+                .attr("y", -75)
+                .attr("x", -height / 2 - margin.top - 10)
+                .attr("dy","1em")
+                .text("Log Lost");
+
+    svg.append("text")
+                .attr("y", height + 25)
+                .attr("x", width / 2)
+                .attr("dy","1em")
+                .attr("text-anchor","middle")
+                .text("Iteration");
+
+    svg.append("text")
+                .attr("y", margin.top - 120)
+                .attr("x", width / 2)
+                .attr("dy","1em")
+                .attr("text-anchor","middle")
+                .text("Training Convergence");
+
+    var legendRectSize = 16;
+    var legendSpacing = 4;
+                                          // NEW
+
+        svg.append('rect')                                     // NEW
+          .attr('width', legendRectSize)                          // NEW
+          .attr('height', legendRectSize)   
+          .attr("x", width + 20)     
+          .attr("fill", "red")                 // NEW
+          .style('stroke', "red"); 
+
+          svg.append('rect')                                     // NEW
+          .attr('width', legendRectSize)                          // NEW
+          .attr('height', legendRectSize)   
+          .attr("x", width + 20)
+          .attr("y", 30)     
+          .attr("fill", "steelblue")                 // NEW
+          .style('stroke', "steelblue"); 
+
+        svg.append("text")
+            .attr("x", width + 40)
+            .attr("y", 6)
+            .attr("dy", ".35em")
+            .attr("font-size", "16px")
+            .text("test");
+
+        svg.append("text")
+            .attr("x", width + 40)
+            .attr("y", 36)
+            .attr("dy", ".35em")
+            .attr("font-size", "16px")
+            .text("train");
+        
+
+});
+
+</script>
+</body>

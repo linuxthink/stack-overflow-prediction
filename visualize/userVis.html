@@ -3,8 +3,13 @@
 <style>
 
 svg {
-  font: 12px sans-serif;
+  font: 32px sans-serif;
 }
+
+.axis text {
+            font-family: sans-serif;
+            font-size: 16px;
+        }
 
 .background path {
   fill: none;
@@ -40,7 +45,7 @@ svg {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-var margin = {top: 30, right: 10, bottom: 10, left: 10},
+margin = {top: 100, right: 20, bottom: 100, left: 80},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -133,6 +138,13 @@ d3.csv("../data/user.csv", function(error, cars) {
     .selectAll("rect")
       .attr("x", -8)
       .attr("width", 16);
+
+    svg.append("text")
+                .attr("y", margin.top - 180)
+                .attr("x", width / 2)
+                .attr("dy","1em")
+                .attr("text-anchor","middle")
+                .text("User information");
 });
 
 function position(d) {

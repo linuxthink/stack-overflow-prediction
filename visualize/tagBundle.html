@@ -3,7 +3,10 @@
 <style>
 
 .node {
-  font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+svg {
+  font: 32px sans-serif;
 }
 
 .link {
@@ -13,7 +16,7 @@
 }
 
 </style>
-<body>
+<body align="center">
 <script src="./d3/d3.min.js"></script>
 <script>
 
@@ -63,6 +66,13 @@ d3.json("../data/tagConnect.json", function(error, classes) {
       .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
       .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
       .text(function(d) { return d.key; });
+
+  svg.append("text")
+                .attr("y", -470)
+                .attr("x", 0)
+                .attr("dy","1em")
+                .attr("text-anchor","middle")
+                .text("Tag Connection Situation");
 });
 
 d3.select(self.frameElement).style("height", diameter + "px");

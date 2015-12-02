@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <style>
     svg {
-          font: 10px sans-serif;
+          font: 32px sans-serif;
         }
         .axis path,
         .axis line {
@@ -13,7 +13,7 @@
 
         .axis text {
             font-family: sans-serif;
-            font-size: 12px;
+            font-size: 16px;
         }
 
         .brush .extent {
@@ -26,7 +26,7 @@
 <body align="center">
 <script src="./d3/d3.min.js"></script>
 <script>
-    var margin = {top: 100, right: 80, bottom: 100, left: 80},
+    var margin = {top: 100, right: 80, bottom: 100, left: 90},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -83,25 +83,22 @@
 
     svg.append("text")
                 .attr("transform","rotate(-90)")
-                .attr("y", 0)
-                .attr("x", -height / 2 - margin.top)
+                .attr("y", -5)
+                .attr("x", -height / 2 - margin.top - 70)
                 .attr("dy","1em")
-                .style("font-size", "16px") 
                 .text("Close Ratio");
 
     svg.append("text")
-                .attr("y", height + margin.bottom + 40)
+                .attr("y", height + margin.bottom + 30)
                 .attr("x", width / 2 + margin.right)
                 .attr("dy","1em")
-                .style("font-size", "16px")
                 .attr("text-anchor","middle")
                 .text("Day in month");
 
     svg.append("text")
-                .attr("y", margin.top - 70)
+                .attr("y", margin.top - 60)
                 .attr("x", width / 2 + margin.right)
                 .attr("dy","1em")
-                .style("font-size", "16px")
                 .attr("text-anchor","middle")
                 .text("Close ratio VS. Day in month");
 

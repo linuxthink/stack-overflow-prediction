@@ -23,16 +23,16 @@ svg {
 <script>
 
 var margin = {top: 50, right: 20, bottom: 70, left: 90},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 1500 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
 
-var color = d3.scale.category20c();
+var color = d3.scale.category20();
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .3);
 
 var y = d3.scale.linear()
-    .domain([0, 0.04])
+    .domain([0, 4000])
     .range([height, 0]);
 
 var xAxis = d3.svg.axis()
@@ -49,7 +49,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("../data/tagvsratio.csv", type, function(error, data) {
+d3.csv("../data/importance.csv", type, function(error, data) {
   if (error) throw error;
 
   x.domain(data.map(function(d) { return d.letter; }));
@@ -76,23 +76,23 @@ d3.csv("../data/tagvsratio.csv", type, function(error, data) {
   svg.append("text")
                 .attr("transform","rotate(-90)")
                 .attr("y", -90)
-                .attr("x", -height / 2 - margin.top - 50)
+                .attr("x", -height / 2 - margin.top - 30)
                 .attr("dy","1em")
-                .text("Close Ratio");
+                .text("Importance");
 
     svg.append("text")
                 .attr("y", height + 25)
                 .attr("x", width / 2 + margin.right)
                 .attr("dy","1em")
                 .attr("text-anchor","middle")
-                .text("Tags");
+                .text("Features");
 
     svg.append("text")
                 .attr("y", margin.top - 95)
                 .attr("x", width / 2 + margin.right)
                 .attr("dy","1em")
                 .attr("text-anchor","middle")
-                .text("Close ratio VS. Tags");
+                .text("Importance of features");
 });
 
 function type(d) {
